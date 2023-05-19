@@ -174,7 +174,7 @@ const tick = () => {
     // Update controls
     controls.update()
 
-    // cube.rotation.y += 0.01
+    cube.rotation.y += 0.01
 
     bufferScene.worldToLocal(bufferCamera.position.copy(camera.position))
     bufferCamera.lookAt(controls.target)
