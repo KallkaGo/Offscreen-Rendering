@@ -24,7 +24,7 @@ Loader
 const textureLoader = new THREE.TextureLoader()
 const texture = textureLoader.load('./loadbg.jpg')
 texture.encoding = THREE.sRGBEncoding
-scene.background =texture
+scene.background = texture
 
 
 
@@ -151,6 +151,18 @@ scene.add(camera)
 // Controls
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
+/* emit Y */
+controls.maxAzimuthAngle = Math.PI / 8
+controls.minAzimuthAngle = -Math.PI / 8
+
+/* emit X */
+
+// controls.maxPolarAngle = Math.PI/9
+// controls.minPolarAngle = -Math.PI/9
+
+controls.maxPolarAngle = Math.PI * 2 / 3
+controls.minPolarAngle = Math.PI / 3
+
 
 /**
  * Renderer
@@ -159,7 +171,7 @@ const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
     antialias: true
 })
-renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.outputEncoding = THREE.sRGBEncoding
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
