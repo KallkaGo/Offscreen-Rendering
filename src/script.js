@@ -13,13 +13,24 @@ const gui = new dat.GUI()
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
 
+
 // Scene
 const scene = new THREE.Scene()
 
-scene.background = new THREE.Color('ivory')
+
+/* 
+Loader
+*/
+const textureLoader = new THREE.TextureLoader()
+const texture = textureLoader.load('./loadbg.jpg')
+texture.encoding = THREE.sRGBEncoding
+scene.background =texture
+
+
 
 
 const buffer = new THREE.WebGLRenderTarget(1000, 1000)
+buffer.texture.encoding = THREE.sRGBEncoding
 
 /* 
 bufferCamera
@@ -35,7 +46,7 @@ bufferCamera.position.set(0.25, - 0.25, 2)
 const geometry = new THREE.PlaneGeometry(2, 2, 32, 32)
 
 // Material
-const material = new THREE.MeshToonMaterial({
+const material = new THREE.MeshBasicMaterial({
     map: buffer.texture
 })
 
@@ -71,6 +82,7 @@ scene.add(group)
 const bufferScene = new THREE.Scene()
 
 bufferScene.add(bufferCamera)
+bufferScene.background = new THREE.Color('pink')
 
 const cube = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.3, 0.3), new THREE.MeshPhongMaterial(
     { color: 'red' })
@@ -147,6 +159,7 @@ const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
     antialias: true
 })
+renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
@@ -163,7 +176,7 @@ const tick = () => {
 
     // cube.rotation.y += 0.01
 
-    bufferCamera.position.copy(camera.position)
+    bufferScene.worldToLocal(bufferCamera.position.copy(camera.position))
     bufferCamera.lookAt(controls.target)
     bufferScene.localToWorld(bottomLeftCorner.set(-1, -1, 0))
     bufferScene.localToWorld(bottomRightCorner.set(1, - 1, 0))
