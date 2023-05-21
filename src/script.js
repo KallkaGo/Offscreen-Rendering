@@ -142,8 +142,6 @@ controls.minAzimuthAngle = -Math.PI / 8
 
 /* emit X */
 
-// controls.maxPolarAngle = Math.PI/9
-// controls.minPolarAngle = -Math.PI/9
 
 controls.maxPolarAngle = (Math.PI * 2) / 3
 controls.minPolarAngle = Math.PI / 3
@@ -471,9 +469,13 @@ const mainBuffer = new BufferShader(
 const geometry = new THREE.PlaneGeometry(2, 2, 32, 32)
 
 // Material
-const material = new THREE.MeshBasicMaterial({
+const material = new THREE.MeshPhongMaterial({
     // map: buffer.texture
     map: mainBuffer.readBuffer.texture,
+    emissiveMap: mainBuffer.readBuffer.texture,
+    emissive:'red',
+    emissiveIntensity:2
+    
 })
 
 // Mesh
@@ -509,6 +511,8 @@ const tick = () => {
     controls.update()
 
     const delta = clock.getDelta()
+
+    
 
     // cube.rotation.y += 0.01
 
@@ -547,7 +551,7 @@ const tick = () => {
     mainBuffer.render()
 
 
-
+    
     renderer.render(scene, camera)
 
     // Render

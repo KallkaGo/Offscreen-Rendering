@@ -1,5 +1,4 @@
 import * as THREE from 'three'
-import * as CameraUtils from "three/examples/jsm/utils/CameraUtils"
 export default class bufferShader {
   scene = new THREE.Scene()
  
